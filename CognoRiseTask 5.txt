@@ -1,0 +1,126 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Define a Course class to represent course information.
+class Course {
+    private String code;
+    private String title;
+    private String description;
+    private int capacity;
+    private List<Student> enrolledStudents;
+
+    public Course(String code, String title, String description, int capacity) {
+        this.code = code;
+        this.title = title;
+        this.description = description;
+        this.capacity = capacity;
+        this.enrolledStudents = new ArrayList<>();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public List<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+}
+
+// Define a Student class to represent student information.
+class Student {
+    private int studentId;
+    private String name;
+    private List<Course> registeredCourses;
+
+    public Student(int studentId, String name) {
+        this.studentId = studentId;
+        this.name = name;
+        this.registeredCourses = new ArrayList<>();
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Course> getRegisteredCourses() {
+        return registeredCourses;
+    }
+}
+
+public class CourseRegistrationSystem {
+    public static void main(String[] args) {
+        // Create a list of courses and students.
+        List<Course> courses = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+
+        // Create and add some courses to the course database.
+        Course course1 = new Course("CSCI101", "Introduction to Programming", "Learn the basics of programming.", 30);
+        Course course2 = new Course("MATH201", "Calculus I", "Study calculus.", 25);
+        courses.add(course1);
+        courses.add(course2);
+
+        // Create and add some students to the student database.
+        Student student1 = new Student(1, "Alice");
+        Student student2 = new Student(2, "Bob");
+        students.add(student1);
+        students.add(student2);
+
+        // Display available courses with details and available slots.
+        System.out.println("Available Courses:");
+        for (Course course : courses) {
+            int availableSlots = course.getCapacity() - course.getEnrolledStudents().size();
+            System.out.println("Course Code: " + course.getCode());
+            System.out.println("Title: " + course.getTitle());
+            System.out.println("Description: " + course.getDescription());
+            System.out.println("Available Slots: " + availableSlots);
+            System.out.println();
+        }
+
+        // Allow students to register for courses.
+        student1.getRegisteredCourses().add(course1);
+        course1.getEnrolledStudents().add(student1);
+
+        student2.getRegisteredCourses().add(course2);
+        course2.getEnrolledStudents().add(student2);
+
+        // Display the courses registered by each student.
+        for (Student student : students) {
+            System.out.println(student.getName() + "'s Registered Courses:");
+            for (Course course : student.getRegisteredCourses()) {
+                System.out.println("Course Code: " + course.getCode());
+                System.out.println("Title: " + course.getTitle());
+                System.out.println();
+            }
+        }
+
+        // Allow students to drop courses.
+        student1.getRegisteredCourses().remove(course1);
+        course1.getEnrolledStudents().remove(student1);
+
+        // Display the updated courses registered by each student.
+        for (Student student : students) {
+            System.out.println(student.getName() + "'s Updated Registered Courses:");
+            for (Course course : student.getRegisteredCourses()) {
+                System.out.println("Course Code: " + course.getCode());
+                System.out.println("Title: " + course.getTitle());
+                System.out.println();
+            }
+        }
+    }
+}

@@ -1,0 +1,129 @@
+import java.util.ArrayList;
+
+class Book {
+    private String title;
+    private String author;
+    private boolean isCheckedOut;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isCheckedOut = false;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isCheckedOut() {
+        return isCheckedOut;
+    }
+
+    public void checkout() {
+        if (!isCheckedOut) {
+            isCheckedOut = true;
+            System.out.println("Book '" + title + "' by " + author + " has been checked out.");
+        } else {
+            System.out.println("Book '" + title + "' by " + author + " is already checked out.");
+        }
+    }
+
+    public void returnBook() {
+        if (isCheckedOut) {
+            isCheckedOut = false;
+            System.out.println("Book '" + title + "' by " + author + " has been returned.");
+        } else {
+            System.out.println("Book '" + title + "' by " + author + " is already available.");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + "\nAuthor: " + author + "\nStatus: " + (isCheckedOut ? "Checked Out" : "Available");
+    }
+}
+
+class LibraryCatalog {
+    private ArrayList<Book> books;
+
+    public LibraryCatalog() {
+        books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void searchByTitle(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                System.out.println(book);
+                return;
+            }
+        }
+        System.out.println("Book with title '" + title + "' not found.");
+    }
+
+    public void searchByAuthor(String author) {
+        for (Book book : books) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                System.out.println(book);
+            }
+        }
+    }
+
+    public void checkoutBook(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                book.checkout();
+                return;
+            }
+        }
+        System.out.println("Book with title '" + title + "' not found.");
+    }
+
+    public void returnBook(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                book.returnBook();
+                return;
+            }
+        }
+        System.out.println("Book with title '" + title + "' not found.");
+    }
+
+    public void displayAllBooks() {
+        if (books.isEmpty()) {
+            System.out.println("No books in the catalog.");
+        } else {
+            for (Book book : books) {
+                System.out.println(book);
+                System.out.println("-----------------------");
+            }
+        }
+    }
+}
+
+public class CognoRiseTask2 {
+    public static void main(String[] args) {
+        LibraryCatalog catalog = new LibraryCatalog();
+
+        Book book1 = new Book("One Day Life will Change", "Saranya Umakandhan");
+        Book book2 = new Book("IT Starts with US", "Colleen Hoover");
+
+        catalog.addBook(book1);
+        catalog.addBook(book2);
+
+        catalog.checkoutBook("One Day Life will Change");
+        catalog.checkoutBook("IT Starts with US");
+
+        catalog.searchByTitle("One Day Life will Change");
+        catalog.returnBook("One Day Life will Change");
+
+        catalog.displayAllBooks();
+    }
+}

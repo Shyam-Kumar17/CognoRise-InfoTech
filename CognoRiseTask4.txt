@@ -1,0 +1,58 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class CognoRiseTask4 {
+    public static void main(String[] args) {
+        String[] words = {"apple", "banana", "cherry", "date", };
+        Random random = new Random();
+        String randomWord = words[random.nextInt(words.length)];
+        char[] displayWord = new char[randomWord.length()];
+        for (int i = 0; i < displayWord.length; i++) {
+            displayWord[i] = '_';
+        }
+
+        int maxAttempts = 6;
+        int incorrectGuesses = 0;
+        Scanner scanner = new Scanner(System.in);
+
+        while (incorrectGuesses < maxAttempts) {
+            System.out.println("Current word: " + String.valueOf(displayWord));
+            System.out.print("Guess a letter: ");
+            char guess = scanner.next().charAt(0);
+
+            boolean flag = false;
+            for (int i = 0; i < randomWord.length(); i++) {
+                if (randomWord.charAt(i) == guess) {
+                    displayWord[i] = guess;
+                    flag = true;
+                }
+            }
+
+            if (!flag) {
+                incorrectGuesses++;
+                System.out.println("Incorrect guess. Attempts left: " + (maxAttempts - incorrectGuesses));
+                displayHangman(incorrectGuesses);
+            }
+
+            if (randomWord.equals(String.valueOf(displayWord))) {
+                System.out.println("Congratulations! You guessed the word: " + randomWord);
+                break;
+            }
+        }
+
+        if (incorrectGuesses == maxAttempts) {
+            System.out.println("You've run out of attempts. The word was: " + randomWord);
+        }
+
+        scanner.close();
+    }
+
+    public static void displayHangman(int incorrectGuesses) {
+        // You can implement the CognoRiseTask4 figure display here based on the number of incorrect guesses.
+    }
+}
+
+
+ 
+
+
